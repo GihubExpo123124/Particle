@@ -1,6 +1,41 @@
 #include "Particle.h"
 
 
+Particle::Particle(RenderTarget& target, int numPoints, Vector2i mouseClickPosition) : m_A(2, numPoints), 
+                                                                                       m_ttl(TTL), 
+                                                                                      m_numPoints(numPoints),
+                                                                                       m_radiansPerSec((float)rand() / RAND_MAX * PI),
+                                                                                       m_cartesianPlane({0,0}, target.getSize().x, (-1.0)* target.getSize().y),
+                                                                                       m_centerCoordinate(m_cartesianPlane.getCenter());
+                                                                                       m_vx(100 + rand() % 401), m_vy(100 + rand() % 401),
+                                                                                       m_color1(Color::Red), m_color2(Color::Blue)
+{
+  float theta = (float)rand() / RAND_MAX * (PI / 2);
+  float dTheta = 2 * PI / (numPoints - 1);
+  for (int j = 0; i < numPoints; ++j) {
+      float r = 20 + rand() % 61, dx, dy;
+      dx = r * cos(theta);
+      dy = r * sin(theta);
+      m_A(0, j) = m_centerCoordinate.x + dx;
+      m_A(1, j) = m_centerCoordinate.y + dy;
+      theta += dTheta;
+  }
+}
+
+void Particle::draw(RenderTarget& target, RenderStates states) const {
+    VertexArray lines(TriangleFan, m_numPoints + 1);
+   
+    Vector2f center(target.mapCoordsToPixel(m_cartesianPlane));
+    lines[0].position = center;
+    lines[0].color = m_color;
+
+    for (int j = 1; j < m_numPoints + 1; ++j) {
+        lines[j].position = m_A(0, j-1);
+    }
+
+    lines[j].color = m_Color2;
+    target.draw(lines);
+}
 bool Particle::almostEqual(double a, double b, double eps)
 {
     return fabs(a - b) < eps;
