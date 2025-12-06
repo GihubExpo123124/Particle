@@ -1,7 +1,8 @@
 #include "Engine.h"
 #include <cstdlib>
 #include <ctime>
-using namepsace std
+
+using namespace std;
 
 
 Engine::Engine() {
@@ -15,7 +16,7 @@ void Engine::run() {
     p.unitTests();
     cout << "Unit tests complete.  Starting engine..." << endl;
     while (m_Window.isOpen()) {
-        floar w = clock.restart().asSeconds();
+        float w = clock.restart().asSeconds();
         input();
         update(w);
         draw();
@@ -24,6 +25,45 @@ void Engine::run() {
 void Engine::input() {
     Event event;
     while (m_Window.pollEvent(event)) {
-        if (event.type == Event::Closed || event.type++)
+        if (event.type == Event::Closed || Keyboard::isKeyPressed(Keyboard::Escape)) {
+            m_Window.close();
+        }
+        
+
+        if (event.type == Event::MouseButtonPressed) {
+            if (event.mouseButton.button == Mouse::Left) {
+                for (int i = 0; i < 5; ++i ) 
+                {
+                    Particle p(m_Window, 25 + rand() % 26, Vector2i(event.mouseButton.x, event.mouseButton.y) );
+                    m_particles.push_back(p);
+                }
+            }
+        }
     }
+}
+
+void Engine::update(float dtAsSeconds) {
+    Clock clock;
+    vector<Particle>::iterator pPointer = m_particles.begin();
+
+    for (size_t i = 0; i < m_particles.size(); ++i) {
+        if (m_particles.at(i).getTTL() > 0.f) {
+            float dt = clock.restart().asSeconds() ;  
+           m_particles.at(i).update(dt);
+           ++pPointer;
+        }
+        else {
+            pPointer = m_particles.erase(pPointer + i);
+            
+        }
+    }
+}
+
+void Engine::draw() {
+    m_Window.clear();
+    for (size_t i{}; i < m_particles.size(); ++i) {
+        m_Window.draw(m_particles.at(i));
+    }
+
+    m_Window.display();
 }
