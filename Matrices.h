@@ -78,9 +78,8 @@ namespace Matrices
         sin(theta)   cos(theta)
         */
         ///theta represents the angle of rotation in radians, counter-clockwise
-        RotationMatrix(double theta) : Matrix(2, 2) {}
+        RotationMatrix(double theta);
     };
-
     ///2D scaling matrix
     ///usage:  A = S * A expands or contracts A by the specified scaling factor
     class ScalingMatrix : public Matrix
@@ -93,7 +92,7 @@ namespace Matrices
         0       scale
         */
         ///scale represents the size multiplier
-        ScalingMatrix(double scale) : Matrix(2, 2) {}
+        ScalingMatrix(double scale);
     };
 
     ///2D Translation matrix
@@ -110,7 +109,9 @@ namespace Matrices
         ///paramaters are xShift, yShift, and nCols
         ///nCols represents the number of columns in the matrix
         ///where each column contains one (x,y) coordinate pair
-        TranslationMatrix(double xShift, double yShift, int nCols) : Matrix(2, nCols ) {}
+        TranslationMatrix(double xShift, double yShift, int nCols);
+
+        
     };
 }
 

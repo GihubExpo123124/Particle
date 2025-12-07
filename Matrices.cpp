@@ -1,5 +1,6 @@
 #include "Matrices.h"
 
+
 namespace Matrices {
     Matrix::Matrix(int _rows, int _cols) {
         rows = _rows;
@@ -86,5 +87,27 @@ namespace Matrices {
         }
 
         return c;
+    }
+
+
+    RotationMatrix::RotationMatrix(double theta) : Matrix(2, 2) {
+        (*this)(0, 0) = cos(theta);
+        a.at(0).at(1) = -sin(theta);
+        (*this)(1, 0) = sin(theta);
+        (*this)(1, 1) = cos(theta);
+    }
+
+    TranslationMatrix::TranslationMatrix(double xShift, double yShift, int nCols) : Matrix(2, nCols) {
+        for (int j = 0; j < nCols; ++j) {
+            (*this)(0, j) = xShift;
+            (*this)(1, j) = yShift;
+        }
+
+    }
+
+
+    ScalingMatrix::ScalingMatrix(double scale) : Matrix(2, 2) {
+        (*this)(0, 0) = scale;
+        operator()(1, 1) = scale;
     }
 }
