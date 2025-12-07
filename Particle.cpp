@@ -11,7 +11,13 @@ Particle::Particle(RenderTarget& target, int numPoints, Vector2i mouseClickPosit
                                                                                 
 
 {
-     m_color1 = hsvToRgb(m_hue1, m_saturation1, m_value1);
+  m_hue1 = static_cast<float>(rand() % 360);
+  m_hue2 = static_cast<float>(rand() % 360);
+  m_saturation1 = 1.0f;
+  m_saturation2 = 1.0f;
+    
+    
+    m_color1 = hsvToRgb(m_hue1, m_saturation1, m_value1);
     m_color2 = hsvToRgb(m_hue2, m_saturation2, m_value2);
     m_cartesianPlane.setCenter(0, 0);
     m_cartesianPlane.setSize(target.getSize().x, (-1.0) * target.getSize().y);
