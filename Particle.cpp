@@ -7,9 +7,8 @@ Particle::Particle(RenderTarget& target, int numPoints, Vector2i mouseClickPosit
                                                                                        m_ttl(TTL), 
                                                                                       m_numPoints(numPoints),
                                                                                        m_radiansPerSec((float)rand() / RAND_MAX * M_PI),
-                                                                                       m_vx(100 + rand() % 401), m_vy(100 + rand() % 401),
-                                                                                       m_color1 = hsvToRgb(m_hue1, m_saturation1, m_value1);
-                                                                                        m_color2 = hsvToRgb(m_hue2, m_saturation2, m_value2);
+                                                                                       m_vx(100 + rand() % 401), m_vy(100 + rand() % 401)
+                                                                                
 
 {
      m_color1 = hsvToRgb(m_hue1, m_saturation1, m_value1);
@@ -55,12 +54,12 @@ void Particle::update(float DT) {
     m_vy -= G * DT;
     dy = m_vy * DT;
     translate(dx, dy);
-    m_hue1 += DT * static_cast<float>(60);
-    m_hue2 += DT * static_cast<float>(60);
+    m_hue1 += DT * 60.f;
+    m_hue2 += DT * 60.f;
 
 
-if (m_hue1 > static_cast<float>(360)) m_hue1 -= static_cast<float>(360);
-if (m_hue2 > static_cast<float>(360)) m_hue2 -= static_cast<float>(360);
+if (m_hue1 > 360.f) m_hue1 -= 360.f;
+if (m_hue2 > 360.f) m_hue2 -= 360.f;
 
 
 m_color1 = hsvToRgb(m_hue1, m_saturation1, m_value1);
@@ -237,9 +236,9 @@ void Particle::unitTests()
     std::cout << "Score: " << score << " / 7" << endl;
 }
 void rgbToHsv(const sf::Color& c, float& h, float& s, float& v) {
-  float r = static_cast<float>(c.r) / static_cast<float>(255);
-  float g = static_cast<float>(c.g) / static_cast<float>(255);
-  float b = static_cast<float>(c.b) / static_cast<float>(255);
+  float r = c.r / 255.f;
+  float g = c.g / 255.f;
+  float b = c.b / static_cast<float>(255);
   float maxVal = r;
   if (g > maxVal) maxVal = g;
   if (b > maxVal) maxVal = b;
@@ -248,34 +247,34 @@ void rgbToHsv(const sf::Color& c, float& h, float& s, float& v) {
   if (b < minVal) minVal = b;
   float delta = maxVal - minVal;
   v = maxVal;
-  if (delta == static_cast<float>(0)) {
-    h = static_cast<float>(0);
-    s = static_cast<float>(0);
+  if (delta == 0.f) {
+    h = 0.f;
+    s = 0.f;
     return;
   }
    s = delta / maxVal;
   if (maxVal == r) {
-    h = static_cast<float>(60) * ((g - b) / delta);
+    h = 60.f * ((g - b) / delta);
   } else if (maxVal == g) {
-    h = static_cast<float>(60) * (((b - r) / delta) + static_cast<float>(2));
+    h = 60.f * (((b - r) / delta) + 2.f);
   } else {
-    h = static_cast<float>(60) * (((r - g) / delta) + static_cast<float>(4));
+    h = 60.f * (((r - g) / delta) + 4.f);
   }
-  if (h < static_cast<float>(0)) {
-    h += static_cast<float>(360);
+  if (h < 0) {
+    h += 360.f;
   }
 }
 sf::Color hsvToRgb(float h, float s, float v) {
   float c = v * s;
-  float hSection = h / static_cast<float>(60);
+  float hSection = h / 60.f;
   int section = static_cast<int>(hSection);
   float fraction = hSection - static_cast<float>(section);
 
-  float r1 = static_cast<float>(0);
-  float g1 = static_cast<float>(0);
-  float b1 = static_cast<float>(0);
+  float r1 = 0.f;
+  float g1 = 0.f;
+  float b1 = 0.f;
 
-  float x = c * (1 - std::abs((fraction * static_cast<float>(2)) - static_cast<float>(1)));
+  float x = c * (1 - std::abs((fraction * 2.f) - 1.f));
 
   if (section == 0) {
     r1 = c; g1 = x; b1 = 0;
@@ -295,8 +294,8 @@ sf::Color hsvToRgb(float h, float s, float v) {
   float g = g1 + m;
   float b = b1 + m;
    return sf::Color(
-    static_cast<sf::Uint8>(r * static_cast<float>(255)),
-    static_cast<sf::Uint8>(g * static_cast<float>(255)),
-    static_cast<sf::Uint8>(b * static_cast<float>(255))
+    static_cast<sf::Uint8>(r * 255),
+    static_cast<sf::Uint8>(g * 255),
+    static_cast<sf::Uint8>(b * 255)
   );
 }
