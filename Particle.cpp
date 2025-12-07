@@ -221,3 +221,67 @@ void Particle::unitTests()
 
     std::cout << "Score: " << score << " / 7" << endl;
 }
+void rgbToHsv(const sf::Color& c, float& h, float& s, float& v) {
+  float r = static_cast<float>(c.r) / static_cast<float>(255);
+  float g = static_cast<float>(c.g) / static_cast<float>(255);
+  float b = static_cast<float>(c.b) / static_cast<float>(255);
+  float maxVal = r;
+  if (g > maxVal) maxVal = g;
+  if (b > maxVal) maxVal = b;
+  float minVal = r;
+  if (g < minVal) minVal = g;
+  if (b < minVal) minVal = b;
+  float delta = maxVal - minVal;
+  v = maxVal;
+  if (delta == static_cast<float>(0)) {
+    h = static_cast<float>(0);
+    s = static_cast<float>(0);
+    return;
+  }
+   s = delta / maxVal;
+  if (maxVal == r) {
+    h = static_cast<float>(60) * ((g - b) / delta);
+  } else if (maxVal == g) {
+    h = static_cast<float>(60) * (((b - r) / delta) + static_cast<float>(2));
+  } else {
+    h = static_cast<float>(60) * (((r - g) / delta) + static_cast<float>(4));
+  }
+  if (h < static_cast<float>(0)) {
+    h += static_cast<float>(360);
+  }
+}
+sf::Color hsvToRgb(float h, float s, float v) {
+  float c = v * s;
+  float hSection = h / static_cast<float>(60);
+  int section = static_cast<int>(hSection);
+  float fraction = hSection - static_cast<float>(section);
+
+  float r1 = static_cast<float>(0);
+  float g1 = static_cast<float>(0);
+  float b1 = static_cast<float>(0);
+
+  float x = c * (1 - std::abs((fraction * static_cast<float>(2)) - static_cast<float>(1)));
+
+  if (section == 0) {
+    r1 = c; g1 = x; b1 = 0;
+  } else if (section == 1) {
+    r1 = x; g1 = c; b1 = 0;
+  } else if (section == 2) {
+    r1 = 0; g1 = c; b1 = x;
+  } else if (section == 3) {
+    r1 = 0; g1 = x; b1 = c;
+  } else if (section == 4) {
+    r1 = x; g1 = 0; b1 = c;
+  } else {
+    r1 = c; g1 = 0; b1 = x;
+  }
+   float m = v - c;
+  float r = r1 + m;
+  float g = g1 + m;
+  float b = b1 + m;
+   return sf::Color(
+    static_cast<sf::Uint8>(r * static_cast<float>(255)),
+    static_cast<sf::Uint8>(g * static_cast<float>(255)),
+    static_cast<sf::Uint8>(b * static_cast<float>(255))
+  );
+}
