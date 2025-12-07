@@ -2,6 +2,7 @@
 
 #include "Matrices.h"
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 #undef M_PI
 #define M_PI 3.1415926535897932384626433
@@ -24,6 +25,9 @@ public:
     bool almostEqual(double a, double b, double eps = 0.0001);
     void unitTests();
 
+    static SoundBuffer explosionBuffer;
+
+
 private:
     float m_ttl;
     int m_numPoints;
@@ -41,7 +45,8 @@ private:
     float m_hue2; //<--Rainbow stuff
     float m_saturation2; //<--Rainbow stuff
     float m_value2; //<--Rainbow stuff
-    
+    Sound explosionSound;
+    bool explosionHappened{0}; // so the sound doesn't repeat multiple times a particle
 
     ///rotate Particle by theta radians counter--clockwise
     ///construct a RotationMatrix R, left mulitply it to m_A

@@ -2,6 +2,9 @@
 #include <SFML/System.hpp>
 using namespace std;
 
+SoundBuffer Particle::explosionBuffer;
+
+bool bufferWorks = Particle::explosionBuffer.loadFromFile("explosion.wav");
 
 Particle::Particle(RenderTarget& target, int numPoints, Vector2i mouseClickPosition) : m_A(2, numPoints), 
                                                                                        m_ttl(TTL), 
@@ -11,6 +14,15 @@ Particle::Particle(RenderTarget& target, int numPoints, Vector2i mouseClickPosit
                                                                                 
 
 {
+    if (!bufferWorks) {
+        cerr << "The audio file failed to load" << std::endl;
+    }
+    else {
+        explosionSound.setBuffer(explosionBuffer);
+    }
+   
+   
+
   m_hue1 = static_cast<float>(rand() % 360);
   m_hue2 = static_cast<float>(rand() % 360);
   m_saturation1 = 1.0f;
@@ -39,6 +51,7 @@ Particle::Particle(RenderTarget& target, int numPoints, Vector2i mouseClickPosit
 }
 
 void Particle::draw(RenderTarget& target, RenderStates states) const {
+    size_t count{};
     VertexArray lines(TriangleFan, m_numPoints + 1);
    
     Vector2f center(target.mapCoordsToPixel(m_centerCoordinate, m_cartesianPlane));
@@ -50,11 +63,13 @@ void Particle::draw(RenderTarget& target, RenderStates states) const {
         lines[j].position = Vector2f((float)temp.x, float(temp.y)); // Test comment
         lines[j].color = m_color2;
     }
-
+   
     target.draw(lines);
 }
 
 void Particle::update(float DT) {
+    
+
     m_ttl -= DT;
     rotate(DT * m_radiansPerSec);
     scale(SCALE);
@@ -65,6 +80,10 @@ void Particle::update(float DT) {
     m_hue1 += DT * 60.f;
     m_hue2 += DT * 60.f;
 
+        if (!explosionHappened) {
+            explosionSound.play();
+            explosionHappened = true;
+        }
 
 if (m_hue1 > 360.f) m_hue1 -= 360.f;
 if (m_hue2 > 360.f) m_hue2 -= 360.f;

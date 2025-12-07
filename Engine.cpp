@@ -31,7 +31,7 @@ void Engine::input() {
         
 
         if (event.type == Event::MouseButtonPressed) {
-            if (event.mouseButton.button == Mouse::Left) {
+            if (event.mouseButton.button == Mouse::Button::Left) {
                 for (int i = 0; i < 5; ++i ) 
                 {
                     Particle p(m_Window, 25 + rand() % 26, Vector2i(event.mouseButton.x, event.mouseButton.y) );
