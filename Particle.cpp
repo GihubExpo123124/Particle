@@ -52,6 +52,16 @@ void Particle::update(float DT) {
     m_vy -= G * DT;
     dy = m_vy * DT;
     translate(dx, dy);
+    m_hue1 += DT * static_cast<float>(60);
+    m_hue2 += DT * static_cast<float>(60);
+
+// Wrap hue around if it goes over 360
+if (m_hue1 > static_cast<float>(360)) m_hue1 -= static_cast<float>(360);
+if (m_hue2 > static_cast<float>(360)) m_hue2 -= static_cast<float>(360);
+
+// Convert updated HSV back to RGB
+m_color1 = hsvToRgb(m_hue1, m_saturation1, m_value1);
+m_color2 = hsvToRgb(m_hue2, m_saturation2, m_value2);
 }
 
 void Particle::translate(double xShift, double yShift) {
