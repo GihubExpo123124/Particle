@@ -51,7 +51,6 @@ Particle::Particle(RenderTarget& target, int numPoints, Vector2i mouseClickPosit
 }
 
 void Particle::draw(RenderTarget& target, RenderStates states) const {
-    size_t count{};
     VertexArray lines(TriangleFan, m_numPoints + 1);
    
     Vector2f center(target.mapCoordsToPixel(m_centerCoordinate, m_cartesianPlane));
