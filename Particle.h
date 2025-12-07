@@ -35,6 +35,13 @@ private:
     Color m_color1;
     Color m_color2;
     Matrix m_A;
+    float m_hue1; //<--Rainbow stuff
+    float m_saturation1; //<--Rainbow stuff
+    float m_value1; //<--Rainbow stuff
+    float m_hue2; //<--Rainbow stuff
+    float m_saturation2; //<--Rainbow stuff
+    float m_value2; //<--Rainbow stuff
+    
 
     ///rotate Particle by theta radians counter--clockwise
     ///construct a RotationMatrix R, left mulitply it to m_A
@@ -48,3 +55,5 @@ private:
     ///construct a TranslationMatrix T, add it to m_A
     void translate(double xShift, double yShift);
 };
+sf::Color hsvToRgb(float h, float s, float v); //<--Rainbow stuff
+void rgbToHsv(const sf::Color& c, float& h, float& s, float& v); //<--Rainbow stuff
