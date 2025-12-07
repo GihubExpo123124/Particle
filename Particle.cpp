@@ -8,7 +8,9 @@ Particle::Particle(RenderTarget& target, int numPoints, Vector2i mouseClickPosit
                                                                                       m_numPoints(numPoints),
                                                                                        m_radiansPerSec((float)rand() / RAND_MAX * M_PI),
                                                                                        m_vx(100 + rand() % 401), m_vy(100 + rand() % 401),
-                                                                                       m_color1(Color::Cyan), m_color2(Color::Magenta)
+                                                                                       m_color1(Color::Cyan), m_color2(Color::Magenta), 
+rgbToHsv(m_color1, m_hue1, m_saturation1, m_value1); //<--rainbow, had to add to constructor
+rgbToHsv(m_color2, m_hue2, m_saturation2, m_value2); //<--rainbow, had to add to constructor
 {
     m_cartesianPlane.setCenter(0, 0);
     m_cartesianPlane.setSize(target.getSize().x, (-1.0) * target.getSize().y);
