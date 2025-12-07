@@ -8,7 +8,7 @@ Particle::Particle(RenderTarget& target, int numPoints, Vector2i mouseClickPosit
                                                                                       m_numPoints(numPoints),
                                                                                        m_radiansPerSec((float)rand() / RAND_MAX * M_PI),
                                                                                        m_cartesianPlane({0,0}, Vector2f(target.getSize().x, (-1.0)* target.getSize().y)),
-                                                                                       m_centerCoordinate(target.mapPixelToCoords(mouseClickPosition, m_cartesianPlane)),
+                                                                                       m_centerCoordinate(m_cartesianPlane.getCenter()),
                                                                                        m_vx(100 + rand() % 401), m_vy(100 + rand() % 401),
                                                                                        m_color1(Color::Red), m_color2(Color::Blue)
 {
