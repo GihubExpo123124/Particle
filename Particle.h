@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wmacro-redefined"
+#pragma GCC diagnostic ignored "-Wbuiltin-macro-redefined"
 
 #define M_PI 3.1415926535897932384626433
 
