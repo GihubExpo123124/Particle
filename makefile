@@ -3,7 +3,7 @@ OBJ_DIR := .
 SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp)
 OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRC_FILES))
 LDFLAGS := -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
-CXXFLAGS := -g -Wall -fpermissive -Wno-reorder -Wno-builtin-macro-redefined -std=c++17
+CXXFLAGS := -g -Wall -fpermissive -Wno-reorder -std=c++17
 TARGET := MakefileTutorial.out
 
 $(TARGET): $(OBJ_FILES)
