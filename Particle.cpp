@@ -15,15 +15,17 @@ Particle::Particle(RenderTarget& target, int numPoints, Vector2i mouseClickPosit
   m_hue2 = static_cast<float>(rand() % 360);
   m_saturation1 = 1.0f;
   m_saturation2 = 1.0f;
-    
-    
-    m_color1 = hsvToRgb(m_hue1, m_saturation1, m_value1);
+   m_value1 = 1.0f;
+  m_value2 = 1.0f;
+  m_color1 = hsvToRgb(m_hue1, m_saturation1, m_value1);
     m_color2 = hsvToRgb(m_hue2, m_saturation2, m_value2);
+    
+    
+   
     m_cartesianPlane.setCenter(0, 0);
     m_cartesianPlane.setSize(target.getSize().x, (-1.0) * target.getSize().y);
     m_centerCoordinate = target.mapPixelToCoords(mouseClickPosition, m_cartesianPlane);
-    rgbToHsv(m_color1, m_hue1, m_saturation1, m_value1); //<--rainbow, had to add to constructor
-    rgbToHsv(m_color2, m_hue2, m_saturation2, m_value2); //<--rainbow, had to add to constructor
+    
   float theta = (float)rand() / RAND_MAX * (M_PI / 2);
   float dTheta = 2 * M_PI / (numPoints - 1);
   for (int j = 0; j < numPoints; ++j) {
