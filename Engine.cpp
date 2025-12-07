@@ -43,17 +43,14 @@ void Engine::input() {
 }
 
 void Engine::update(float dtAsSeconds) {
-    Clock clock;
-    vector<Particle>::iterator pPointer = m_particles.begin();
-
-    for (size_t i = 0; i < m_particles.size(); ++i) {
-        if (m_particles.at(i).getTTL() > 0.f) {
-            float dt = clock.restart().asSeconds() ;  
-           m_particles.at(i).update(dt);
+  
+    for (auto pPointer = m_particles.begin(); pPointer < m_particles.end();) {
+        if (pPointer->getTTL() > 0.f){
+           pPointer->update(dtAsSeconds);
            ++pPointer;
         }
         else {
-            pPointer = m_particles.erase(pPointer + i);
+            pPointer = m_particles.erase(pPointer);
             
         }
     }
