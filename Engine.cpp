@@ -44,7 +44,7 @@ void Engine::input() {
 
 void Engine::update(float dtAsSeconds) {
   
-    for (auto pPointer = m_particles.begin(); pPointer < m_particles.end();) {
+    for (auto pPointer = m_particles.begin(); pPointer != m_particles.end();) {
         if (pPointer->getTTL() > 0.f){
            pPointer->update(dtAsSeconds);
            ++pPointer;
