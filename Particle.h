@@ -1,3 +1,5 @@
+// Partners: Simar Anand & Daryll Carter
+
 #pragma once
 
 #include "Matrices.h"
